@@ -1,8 +1,4 @@
-{layout "../../layout/base.latte"}
-
-{block title}Sign In{/block}
-{include '../../layout/components/validation.latte', name: 'email'}
-{block body}
-{csrf()|noescape}
-<p> Hello, world! {$var}</p>
-{/block}
+{layout $standalone ? 'minimum.latte' : 'layout.latte'}
+{include blockname from 'file.latte'}
+{import 'file.latte'}
+{define blockname}

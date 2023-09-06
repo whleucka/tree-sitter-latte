@@ -1,9 +1,18 @@
 ==================
 Include tag
 ==================
-{include '../../layout/components/validation.latte', name: 'email'}
+{include blockname}
 ---
 (template
+  (content
   (include_tag
-    (include_file_path)
-    (include_options)))
+    (block_name))))
+==================
+Include from file tag
+==================
+{include blockname from 'file.latte'}
+---
+(template
+  (content
+  (include_tag
+    (block_name))))

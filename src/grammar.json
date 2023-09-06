@@ -4,45 +4,108 @@
     "template": {
       "type": "REPEAT",
       "content": {
-        "type": "CHOICE",
-        "members": [
-          {
-            "type": "SYMBOL",
-            "name": "include_tag"
-          },
-          {
-            "type": "SYMBOL",
-            "name": "layout_tag"
-          },
-          {
-            "type": "SYMBOL",
-            "name": "comment"
-          },
-          {
-            "type": "SYMBOL",
-            "name": "block_tag"
-          },
-          {
-            "type": "SYMBOL",
-            "name": "html_tag"
-          },
-          {
-            "type": "SYMBOL",
-            "name": "expression_tag"
-          },
-          {
-            "type": "SYMBOL",
-            "name": "text"
-          }
-        ]
+        "type": "SYMBOL",
+        "name": "content"
       }
+    },
+    "content": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "layout_tag"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "import_tag"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "define_tag"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "include_tag"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "comment"
+        }
+      ]
     },
     "layout_tag": {
       "type": "SEQ",
       "members": [
         {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "STRING",
+              "value": "{layout"
+            },
+            {
+              "type": "STRING",
+              "value": "{extends"
+            }
+          ]
+        },
+        {
+          "type": "SYMBOL",
+          "name": "file_path"
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SEQ",
+              "members": [
+                {
+                  "type": "SYMBOL",
+                  "name": "var_name"
+                },
+                {
+                  "type": "STRING",
+                  "value": "?"
+                },
+                {
+                  "type": "SYMBOL",
+                  "name": "condition"
+                },
+                {
+                  "type": "STRING",
+                  "value": ":"
+                },
+                {
+                  "type": "SYMBOL",
+                  "name": "condition"
+                }
+              ]
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
+        {
           "type": "STRING",
-          "value": "{layout"
+          "value": "}"
+        }
+      ]
+    },
+    "var_name": {
+      "type": "PATTERN",
+      "value": "\\$[A-z]+"
+    },
+    "condition": {
+      "type": "PATTERN",
+      "value": "[^\\}]+"
+    },
+    "import_tag": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "{import"
         },
         {
           "type": "SYMBOL",
@@ -54,16 +117,12 @@
         }
       ]
     },
-    "file_path": {
-      "type": "PATTERN",
-      "value": "[^\\}]+"
-    },
-    "block_tag": {
+    "define_tag": {
       "type": "SEQ",
       "members": [
         {
           "type": "STRING",
-          "value": "{block"
+          "value": "{define"
         },
         {
           "type": "SYMBOL",
@@ -72,46 +131,6 @@
         {
           "type": "STRING",
           "value": "}"
-        },
-        {
-          "type": "REPEAT",
-          "content": {
-            "type": "SYMBOL",
-            "name": "block_content"
-          }
-        },
-        {
-          "type": "STRING",
-          "value": "{/block}"
-        }
-      ]
-    },
-    "block_name": {
-      "type": "PATTERN",
-      "value": "[^\\}]+"
-    },
-    "block_content": {
-      "type": "CHOICE",
-      "members": [
-        {
-          "type": "SYMBOL",
-          "name": "text"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "layout_tag"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "comment"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "html_tag"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "expression_tag"
         }
       ]
     },
@@ -124,15 +143,7 @@
         },
         {
           "type": "SYMBOL",
-          "name": "include_file_path"
-        },
-        {
-          "type": "STRING",
-          "value": ","
-        },
-        {
-          "type": "SYMBOL",
-          "name": "include_options"
+          "name": "block_name"
         },
         {
           "type": "STRING",
@@ -140,32 +151,11 @@
         }
       ]
     },
-    "include_file_path": {
+    "block_name": {
       "type": "PATTERN",
-      "value": "[^,]+"
+      "value": "[^\\}]+"
     },
-    "include_options": {
-      "type": "PATTERN",
-      "value": "[^}]+"
-    },
-    "expression_tag": {
-      "type": "SEQ",
-      "members": [
-        {
-          "type": "STRING",
-          "value": "{"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "expression_name"
-        },
-        {
-          "type": "STRING",
-          "value": "}"
-        }
-      ]
-    },
-    "expression_name": {
+    "file_path": {
       "type": "PATTERN",
       "value": "[^\\}]+"
     },
@@ -185,55 +175,6 @@
           "value": "*}"
         }
       ]
-    },
-    "html_tag": {
-      "type": "SEQ",
-      "members": [
-        {
-          "type": "STRING",
-          "value": "<"
-        },
-        {
-          "type": "PATTERN",
-          "value": "[^\\{\\}>]+"
-        },
-        {
-          "type": "STRING",
-          "value": ">"
-        },
-        {
-          "type": "REPEAT",
-          "content": {
-            "type": "CHOICE",
-            "members": [
-              {
-                "type": "SYMBOL",
-                "name": "text"
-              },
-              {
-                "type": "SYMBOL",
-                "name": "expression_tag"
-              }
-            ]
-          }
-        },
-        {
-          "type": "STRING",
-          "value": "</"
-        },
-        {
-          "type": "PATTERN",
-          "value": "[^\\{\\}>]+"
-        },
-        {
-          "type": "STRING",
-          "value": ">"
-        }
-      ]
-    },
-    "text": {
-      "type": "PATTERN",
-      "value": "[^{}<]+"
     }
   },
   "extras": [

@@ -3,59 +3,57 @@ module.exports = grammar({
 
   rules: {
     template: $ => repeat(
-      choice($.include_tag, $.layout_tag, $.comment, $.block_tag, $.html_tag, $.expression_tag, $.text)
+      $.content
     ),
 
+    content: $ => choice(
+      $.layout_tag, 
+      $.import_tag, 
+      $.define_tag, 
+      $.include_tag, 
+      $.comment
+    ),
+
+    /** Layout tag **/
     layout_tag: $ => seq(
-      '{layout',
+      choice('{layout', '{extends'),
+      $.file_path,
+      optional(seq(
+        $.var_name,
+        '?',
+        $.condition,
+        ':',
+        $.condition
+      )),
+      '}'
+    ),
+    var_name: $ => /\$[A-z]+/,
+    condition: $ => /[^\}]+/,
+
+    /** Import tag **/
+    import_tag: $ => seq(
+      '{import',
       $.file_path,
       '}'
     ),
 
-    file_path: $ => /[^\}]+/,
-
-    block_tag: $ => seq(
-      '{block',
+    /** Define tag **/
+    define_tag: $ => seq(
+      '{define',
       $.block_name,
-      '}',
-      repeat($.block_content),
-      '{/block}'
+      '}'
     ),
 
-    block_name: $ => /[^\}]+/,
-    block_content: $ => choice($.text, $.layout_tag, $.comment, $.html_tag, $.expression_tag),
-
+    /** Include tag **/
     include_tag: $ => seq(
       '{include',
-      $.include_file_path,
-      ',',
-      $.include_options,
+      $.block_name,
       '}'
     ),
-
-    include_file_path: $ => /[^,]+/,
-    include_options: $ => /[^}]+/,
-
-    expression_tag: $ => seq(
-      '{',
-      $.expression_name,
-      '}'
-    ),
-    expression_name: $ => /[^\}]+/,
-
+    
+    block_name: $ => /[^\}]+/,
+    file_path: $ => /[^\}]+/,
     comment: () => seq('{*', /[^#]*\#+([^\}#][^#]*\#+)*/, '*}'),
-
-    html_tag: $ => seq(
-      '<',
-      /[^\{\}>]+/, // Match HTML tag name (excluding '{', '}', and '>')
-      '>',
-      repeat(choice($.text, $.expression_tag)), // Allow text and expressions within the tag
-      '</',
-      /[^\{\}>]+/, // Match closing tag name (excluding '{', '}', and '>')
-      '>'
-    ),
-
-    text: $ => /[^{}<]+/, // Match any text that is not inside curly braces or HTML tags
   }
 });
 

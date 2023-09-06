@@ -1,16 +1,9 @@
 (comment) @comment
-(include_tag) @keyword
-(include_file_path) @string
-(include_options) @string
+
 (layout_tag) @keyword
-(file_path) @string
-(block_tag) @keyword
+(import_tag) @keyword
+(define_tag) @keyword
+(include_tag) @keyword
 (block_name) @attribute
-(expression_tag) @keyword
-(expression_name) @attribute
 
-[
-    "{"
-    "}"
-] @tag.delimiter
-
+(file_path) @string

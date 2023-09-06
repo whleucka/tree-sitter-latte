@@ -1,8 +1,27 @@
 ==================
 Layout tag
 ==================
-{layout "../../layout/base.latte"}
+{layout 'layout.latte'}
 ---
 (template
+  (content
   (layout_tag
-    (file_path)))
+    (file_path))))
+==================
+Extends tag
+==================
+{extends 'layout.latte'}
+---
+(template
+  (content
+  (layout_tag
+    (file_path))))
+==================
+Dynamic layout tag
+==================
+{layout $standalone ? 'minimum.latte' : 'layout.latte'}
+---
+(template
+  (content
+  (layout_tag
+    (file_path))))
