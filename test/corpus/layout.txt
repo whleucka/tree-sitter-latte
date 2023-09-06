@@ -3,7 +3,6 @@ Layout tag
 ==================
 {layout "../../layout/base.latte"}
 ---
-
 (template
   (layout_tag
-    (layout_path)))
+    (file_path)))

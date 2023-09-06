@@ -1,0 +1,9 @@
+==================
+Include tag
+==================
+{include '../../layout/components/validation.latte', name: 'email'}
+---
+(template
+  (include_tag
+    (include_file_path)
+    (include_options)))

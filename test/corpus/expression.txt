@@ -1,0 +1,10 @@
+==================
+Expression tag
+==================
+<p> hello, {var}</p>
+---
+(template
+  (html_tag
+    (text)
+    (expression_tag
+      (expression_name))))

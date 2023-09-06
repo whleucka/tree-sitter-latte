@@ -1,11 +1,10 @@
 ==================
 Block tag
 ==================
-{block sub_body}
-  <p>Hello, world!</p>
-{/block}
+{block test}Hello, world{/block}
 ---
-
 (template
   (block_tag
-    (content)))
+    (block_name)
+    (block_content
+      (text))))
