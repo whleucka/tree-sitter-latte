@@ -1,2 +1,4 @@
 # tree-sitter-latte
-Latte grammar for tree-sitter
+PHP Latte template grammar for tree-sitter
+
+## WIP
