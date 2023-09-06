@@ -1,0 +1,10 @@
+==================
+Define tag
+==================
+{define blockname}
+---
+(template
+  (content
+  (define_tag
+    (block_name))))
+

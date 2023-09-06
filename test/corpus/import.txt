@@ -1,0 +1,9 @@
+==================
+Import tag
+==================
+{import 'file.latte'}
+---
+(template
+  (content
+  (import_tag
+    (file_path))))
