@@ -1,15 +1,9 @@
 ==================
 Layout tag
 ==================
-
----- MODULE Test ----
 {layout "../../layout/base.latte"}
-====
-
 ---
 
-(source_file
-  (text)
+(template
   (layout_tag
-    (layout_path))
-  (text))
+    (layout_path)))

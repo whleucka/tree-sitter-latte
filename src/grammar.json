@@ -1,29 +1,21 @@
 {
   "name": "latte",
   "rules": {
-    "source_file": {
+    "template": {
       "type": "REPEAT",
       "content": {
-        "type": "SYMBOL",
-        "name": "_element"
+        "type": "CHOICE",
+        "members": [
+          {
+            "type": "SYMBOL",
+            "name": "layout_tag"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "block_tag"
+          }
+        ]
       }
-    },
-    "_element": {
-      "type": "CHOICE",
-      "members": [
-        {
-          "type": "SYMBOL",
-          "name": "layout_tag"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "block_tag"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "text"
-        }
-      ]
     },
     "layout_tag": {
       "type": "SEQ",
@@ -42,10 +34,6 @@
         }
       ]
     },
-    "layout_path": {
-      "type": "PATTERN",
-      "value": "[^\\}]+"
-    },
     "block_tag": {
       "type": "SEQ",
       "members": [
@@ -58,7 +46,7 @@
           "members": [
             {
               "type": "SYMBOL",
-              "name": "filter"
+              "name": "content"
             },
             {
               "type": "BLANK"
@@ -67,35 +55,19 @@
         },
         {
           "type": "STRING",
-          "value": "}"
-        },
-        {
-          "type": "REPEAT",
-          "content": {
-            "type": "SYMBOL",
-            "name": "_element"
-          }
-        },
-        {
-          "type": "STRING",
           "value": "{/block}"
         }
       ]
     },
-    "filter": {
-      "type": "SEQ",
-      "members": [
-        {
-          "type": "STRING",
-          "value": "|"
-        },
-        {
-          "type": "PATTERN",
-          "value": "[^\\}]+"
-        }
-      ]
+    "layout_path": {
+      "type": "PATTERN",
+      "value": "[^\\}]+"
     },
-    "text": {
+    "_name": {
+      "type": "PATTERN",
+      "value": "[a-zA-Z_\\x7f-\\xff][a-zA-Z0-9_\\x7f-\\xff]*"
+    },
+    "content": {
       "type": "PATTERN",
       "value": "[^{]+"
     }

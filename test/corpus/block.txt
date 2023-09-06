@@ -1,19 +1,11 @@
-==================|||
+==================
 Block tag
-==================|||
-
----- MODULE Test ----
-{block}
-<ul>
-  <li>Hello World</li>
-</ul>
+==================
+{block sub_body}
+  <p>Hello, world!</p>
 {/block}
-====
+---
 
----|||
-
-(source_file
-  (text)
+(template
   (block_tag
-    (text))
-  (text))
+    (content)))
