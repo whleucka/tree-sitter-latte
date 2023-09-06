@@ -1,0 +1,21 @@
+{
+  "name": "tree-sitter-latte",
+  "version": "0.1.0",
+  "description": "Tree-sitter grammar for Latte templates",
+  "repository": "https://github.com/whleucka/tree-sitter-latte",
+  "author": "Your Name",
+  "license": "MIT",
+  "tree-sitter": [
+    {
+      "scope": "source.latte",
+      "file-types": [
+        "latte"
+      ],
+      "injection-regex": "latte"
+    }
+  ],
+  "dependencies": {
+    "tree-sitter": "^0.20.5"
+  },
+  "main": "bindings/node"
+}

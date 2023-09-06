@@ -1,0 +1,19 @@
+==================|||
+Block tag
+==================|||
+
+---- MODULE Test ----
+{block}
+<ul>
+  <li>Hello World</li>
+</ul>
+{/block}
+====
+
+---|||
+
+(source_file
+  (text)
+  (block_tag
+    (text))
+  (text))

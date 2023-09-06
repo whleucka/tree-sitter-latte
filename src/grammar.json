@@ -1,0 +1,115 @@
+{
+  "name": "latte",
+  "rules": {
+    "source_file": {
+      "type": "REPEAT",
+      "content": {
+        "type": "SYMBOL",
+        "name": "_element"
+      }
+    },
+    "_element": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "layout_tag"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "block_tag"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "text"
+        }
+      ]
+    },
+    "layout_tag": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "{layout"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "layout_path"
+        },
+        {
+          "type": "STRING",
+          "value": "}"
+        }
+      ]
+    },
+    "layout_path": {
+      "type": "PATTERN",
+      "value": "[^\\}]+"
+    },
+    "block_tag": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "{block"
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "filter"
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
+        {
+          "type": "STRING",
+          "value": "}"
+        },
+        {
+          "type": "REPEAT",
+          "content": {
+            "type": "SYMBOL",
+            "name": "_element"
+          }
+        },
+        {
+          "type": "STRING",
+          "value": "{/block}"
+        }
+      ]
+    },
+    "filter": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "|"
+        },
+        {
+          "type": "PATTERN",
+          "value": "[^\\}]+"
+        }
+      ]
+    },
+    "text": {
+      "type": "PATTERN",
+      "value": "[^{]+"
+    }
+  },
+  "extras": [
+    {
+      "type": "PATTERN",
+      "value": "\\s"
+    }
+  ],
+  "conflicts": [],
+  "precedences": [],
+  "externals": [],
+  "inline": [],
+  "supertypes": []
+}
+
